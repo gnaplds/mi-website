@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# PLACEHOLDER: replace the domain once a custom one exists.
+Sitemap: https://example.netlify.app/sitemap.xml

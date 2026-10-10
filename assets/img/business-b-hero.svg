@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800" role="img" aria-label="Placeholder for the Sunrise Pantry hero photo">
+  <rect width="1400" height="800" fill="#FAF7EE"/>
+  <rect x="0" y="600" width="1400" height="200" fill="#F3EBE1"/>
+  <g fill="#6B4F2A" opacity="0.13">
+    <circle cx="280" cy="230" r="170"/>
+    <circle cx="1160" cy="640" r="110"/>
+  </g>
+  <g stroke="#6B4F2A" stroke-width="7" opacity="0.3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M640 250h120l20 240H620z"/>
+    <path d="M690 250v-60h20v60"/>
+    <path d="M600 490h200"/>
+  </g>
+  <text x="700" y="560" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="34" font-weight="700" letter-spacing="5" fill="#6B6152">BUSINESS B HERO PHOTO</text>
+  <text x="700" y="604" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="22" letter-spacing="1" fill="#6B6152" opacity="0.75">Replace with assets/img/business-b-hero.jpg</text>
+</svg>

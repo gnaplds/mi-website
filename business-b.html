@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- PLACEHOLDER: title + meta description -->
+  <title>Sunrise Pantry — Small Batch, Made With Care</title>
+  <meta name="description" content="A small, focused line made in small batches. Message us to check what's in stock.">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sunrise Pantry — Small Batch, Made With Care">
+  <meta property="og:description" content="A small, focused line made in small batches.">
+  <meta property="og:image" content="assets/img/og-share.svg">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body data-business="b">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="wordmark" href="index.html">
+        <svg class="wordmark-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 21c0-6 3-9 8-9 0 5-4 9-8 9Z"/>
+          <path d="M12 21C12 13 8 9 3 9c0 6 4.5 12 9 12Z"/>
+        </svg>
+        <span data-site="momName">Lorna Reyes</span>
+      </a>
+
+      <nav class="nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="business-a.html" data-biz-name="a">Ink &amp; Thread</a>
+        <a href="business-b.html" data-biz-name="b">Sunrise Pantry</a>
+        <a class="btn btn-primary btn-sm" data-messenger="b" href="#contact">Message us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- Business hero -- with only a couple of products, the business itself
+         has to carry the page. -->
+    <section class="biz-hero">
+      <div class="container biz-hero-inner">
+        <div>
+          <p class="eyebrow" data-biz-eyebrow="b">Small batch, made with care</p>
+          <h1 data-biz-name="b">Sunrise Pantry</h1>
+          <p class="lede" data-biz-tagline="b">Two things, made properly.</p>
+          <p class="muted" data-biz-blurb="b">A small, focused line. When it&rsquo;s gone it&rsquo;s gone &mdash; message us to check what&rsquo;s in stock.</p>
+          <p class="muted" data-biz-note="b">How to order: message us on Facebook and we&rsquo;ll confirm what&rsquo;s available.</p>
+          <div class="btn-row mt-lg">
+            <a class="btn btn-primary" data-messenger="b" href="#contact">Message us on Facebook</a>
+            <a class="btn btn-ghost" href="#products">See what we make</a>
+          </div>
+        </div>
+
+        <img class="biz-hero-img" src="assets/img/business-b-hero.svg" width="1400" height="800"
+             alt="Small-batch products ready for pickup">
+      </div>
+    </section>
+
+    <!-- Products ------------------------------------------------------------ -->
+    <section class="section" id="products" aria-labelledby="products-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title" id="products-title">What we make</h2>
+          <p class="lede">That&rsquo;s the whole list. It changes with the season, so ask if you&rsquo;re after something specific.</p>
+        </div>
+
+        <noscript>
+          <p class="noscript-note">
+            This list needs JavaScript to display. Please enable it, or
+            <a data-messenger="b" href="#contact">message us on Facebook</a> and we&rsquo;ll tell you what&rsquo;s available.
+          </p>
+        </noscript>
+
+        <!-- Bands are rendered here by assets/js/main.js from data/products.js -->
+        <div id="product-list"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <div class="footer-col">
+        <p class="footer-brand" data-site="momName">Lorna Reyes</p>
+        <p class="muted" data-site="footerNote">Small-batch maker. Two little businesses, one pair of hands.</p>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">The businesses</h2>
+        <ul>
+          <li><a href="business-a.html" data-biz-name="a">Ink &amp; Thread</a></li>
+          <li><a href="business-b.html" data-biz-name="b">Sunrise Pantry</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Say hello</h2>
+        <ul>
+          <li><a data-messenger="b" href="#contact">Sunrise Pantry on Messenger</a></li>
+          <li><a data-site-phone href="tel:+639000000000">+63 900 000 0000</a></li>
+          <li class="muted" data-site="hours">Mon&ndash;Sat, 9am&ndash;7pm</li>
+          <li class="muted" data-site="location">Quezon City, Philippines</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-legal">
+      <p>&copy; <span data-year>2026</span> <span data-site="momName">Lorna Reyes</span>. All rights reserved.</p>
+      <p>Website by <span data-site="credit">Your Name</span></p>
+    </div>
+  </footer>
+
+  <script src="data/site.js" defer></script>
+  <script src="data/businesses.js" defer></script>
+  <script src="data/products.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+# Netlify configuration — see .scratch/mom-website/spec.md
+#
+# There is no build step: this is plain static HTML. Netlify just serves the
+# repository root as-is.
+
+[build]
+  publish = "."
+
+# Pretty URLs — /business-a serves business-a.html without a .html in the
+# address bar, so the links look like real pages when she shares them.
+[[redirects]]
+  from = "/business-a"
+  to = "/business-a.html"
+  status = 200
+
+[[redirects]]
+  from = "/business-b"
+  to = "/business-b.html"
+  status = 200
+
+# 404.html at the root is picked up automatically by Netlify.

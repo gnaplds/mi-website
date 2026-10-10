@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" role="img" aria-label="Portrait coming soon">
+  <defs>
+    <linearGradient id="p-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FAF7EE"/>
+      <stop offset="1" stop-color="#FBF2DC"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="800" fill="url(#p-bg)"/>
+  <g fill="#2F5D3A" opacity="0.14">
+    <circle cx="320" cy="300" r="96"/>
+    <path d="M320 420c-96 0-170 62-184 152h368c-14-90-88-152-184-152Z"/>
+  </g>
+  <rect x="12" y="12" width="616" height="776" fill="none" stroke="#E3DCC8" stroke-width="4" rx="10"/>
+  <text x="320" y="676" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="26" font-weight="700" letter-spacing="4" fill="#6B6152">PORTRAIT</text>
+  <text x="320" y="712" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="17" letter-spacing="1" fill="#6B6152" opacity="0.75">Replace with assets/img/portrait.jpg</text>
+</svg>

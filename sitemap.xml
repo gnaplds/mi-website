@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PLACEHOLDER: replace the domain once a custom one exists. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://example.netlify.app/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://example.netlify.app/business-a</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://example.netlify.app/business-b</loc>
+    <priority>0.8</priority>
+  </url>
+</urlset>
