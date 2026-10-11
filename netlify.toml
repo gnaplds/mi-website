@@ -1,4 +1,4 @@
-# Netlify configuration — see .scratch/mom-website/spec.md
+# Netlify configuration — see PLAN.md
 #
 # There is no build step: this is plain static HTML. Netlify just serves the
 # repository root as-is.

@@ -1,4 +1,11 @@
-# Yellow is decorative and never carries text
+# Yellow leads the surfaces; dark text carries contrast
+
+Updated 11 October 2026: the user confirmed yellow as the main colour. The redesign
+uses light-yellow backgrounds and stronger yellow hero/contact surfaces, with dark
+ink text. This supersedes the earlier decorative-only emphasis below. The contrast
+constraint remains: no yellow body text on white and no white text on yellow.
+
+## Earlier decision
 
 Mom asked for yellow, green and brown with a light, natural feel. Yellow `#E8B93A` measures
 **1.84:1 against white** — far below the 4.5:1 needed for body text and below even the 3:1

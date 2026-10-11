@@ -1,15 +1,19 @@
-/* ---------------------------------------------------------------------------
- * SITE — global, non-business-specific values.
- * Everything marked PLACEHOLDER is inventory Group A in .scratch/mom-website/spec.md
- * ------------------------------------------------------------------------- */
-
+/* PLACEHOLDER: replace lorem ipsum and empty values with Mom's details.
+   Photos live in assets/img/. Keep preview true until the content is ready.
+   Before launch, also update the static HTML text and metadata; see PLAN.md. */
 window.SITE = {
-  momName: 'Lorna Reyes',                       // PLACEHOLDER
-  footerNote: 'Small-batch maker. Two little businesses, one pair of hands.', // PLACEHOLDER
-  phone: '+639000000000',                       // PLACEHOLDER — digits only after +, used in tel:
-  phoneLabel: '+63 900 000 0000',               // PLACEHOLDER
-  hours: 'Mon\u2013Sat, 9am\u20137pm',           // PLACEHOLDER
-  location: 'Quezon City, Philippines',         // PLACEHOLDER
-  credit: 'Your Name',                          // PLACEHOLDER — footer credit
-  siteUrl: 'https://example.netlify.app',       // PLACEHOLDER — used in robots.txt + sitemap.xml too
+  preview: true,
+  momName: 'Lorem Ipsum',
+  headline: 'Lorem ipsum, dolor sit amet.',
+  introduction: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+  story: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+  storyClosing: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+  portrait: 'assets/img/portrait.svg',
+  portraitAlt: 'Portrait placeholder',
+  footerNote: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  phone: '',
+  phoneLabel: '',
+  hours: '',
+  location: '',
+  credit: '',
 };

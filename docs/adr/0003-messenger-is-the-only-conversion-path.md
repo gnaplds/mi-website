@@ -1,4 +1,13 @@
-# Every call to action opens a Messenger conversation
+# Product inquiries use Messenger
+
+Updated 11 October 2026: the user confirmed a personal and product showcase with
+Messenger inquiries. Navigation and photo-viewer controls have their own actions.
+Business categories are still unknown, so the earlier made-to-order rationale is
+not a verified claim about Mom's products. Missing Messenger addresses must lead to
+a clear contact-unavailable notice, not an invented destination. Do not promise
+prefilled messages or automatic product context in the inbox.
+
+## Earlier decision
 
 There is no cart, no checkout, no payment integration and no contact form. Every CTA on the
 site — header, hero, product card, custom-order callout, footer — opens a Facebook

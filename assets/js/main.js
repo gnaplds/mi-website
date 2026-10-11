@@ -1,239 +1,224 @@
-/* ---------------------------------------------------------------------------
- * main.js — the whole of the site's behaviour.
- *
- *   1. Fill in names, phone, year and credits from data/site.js + businesses.js
- *   2. Resolve every [data-messenger] link (header, footer, product cards) into a
- *      Messenger deep link, pre-filled with the product name where relevant
- *   3. Render the product list in the layout the business asks for
- *   4. Swap any missing photo for the generic placeholder instead of a broken icon
- *
- * No dependencies. No build step. Everything degrades to plain content when
- * JavaScript is off, except the product list (see the <noscript> note).
- * ------------------------------------------------------------------------- */
-
+/* Shared behaviour: editable content, products, contact links and photo viewer.
+   Product content requires JavaScript; static pages provide a noscript notice.
+   No message prefill is promised. See PLAN.md for the launch checklist. */
 (function () {
   'use strict';
 
-  var PLACEHOLDER_IMG = 'assets/img/placeholder.svg';
-  var pageBusiness = document.body.getAttribute('data-business');
-  var BUSINESSES = window.BUSINESSES || {};
-  var PRODUCTS = window.PRODUCTS || [];
-  var SITE = window.SITE || {};
+  const SITE = window.SITE || {};
+  const BUSINESSES = window.BUSINESSES || {};
+  const PRODUCTS = window.PRODUCTS || [];
+  const pageBusiness = document.body.dataset.business;
+  const placeholder = '/assets/img/placeholder.svg';
 
-  /* -- tiny DOM helpers ---------------------------------------------------- */
-
-  function el(tag, className, text) {
-    var node = document.createElement(tag);
+  function element(tag, className, text) {
+    const node = document.createElement(tag);
     if (className) node.className = className;
-    if (text !== undefined && text !== null) node.textContent = text;
+    if (text !== undefined) node.textContent = text;
     return node;
   }
 
-  function peso(value) {
-    var n = Number(value);
-    if (isNaN(n)) return '\u20B1' + value;
-    return '\u20B1' + n.toLocaleString('en-PH');
+  function bindPhoto(img) {
+    img.addEventListener('error', function () {
+      img.src = placeholder;
+      img.alt = 'Photo placeholder; image unavailable';
+    }, { once: true });
+    // Also handle a static image that failed before this deferred script ran.
+    if (img.hasAttribute('src') && img.complete && img.naturalWidth === 0) {
+      img.dispatchEvent(new Event('error'));
+    }
   }
-
-  function priceLabel(item, biz) {
-    if (biz && biz.showPrices === false) return 'Message us for price';
-    if (item.price === null || item.price === undefined) return 'Message us for price';
-    return item.priceFrom ? 'Starting at ' + peso(item.price) : peso(item.price);
-  }
-
-  /* -- 1. fill in static values from data --------------------------------- */
 
   document.querySelectorAll('[data-site]').forEach(function (node) {
-    var value = SITE[node.getAttribute('data-site')];
-    if (value) node.textContent = value;
+    const value = SITE[node.dataset.site];
+    if (value !== undefined) node.textContent = value;
   });
-
   document.querySelectorAll('[data-year]').forEach(function (node) {
     node.textContent = String(new Date().getFullYear());
   });
-
-  document.querySelectorAll('[data-biz-name]').forEach(function (node) {
-    var biz = BUSINESSES[node.getAttribute('data-biz-name')];
-    if (biz && biz.name) node.textContent = biz.name;
+  document.querySelectorAll('[data-preview]').forEach(function (node) {
+    node.hidden = SITE.preview === false;
   });
-
-  document.querySelectorAll('[data-biz-tagline]').forEach(function (node) {
-    var biz = BUSINESSES[node.getAttribute('data-biz-tagline')];
-    if (biz && biz.tagline) node.textContent = biz.tagline;
+  document.querySelectorAll('[data-optional]').forEach(function (node) {
+    node.hidden = !SITE[node.dataset.optional];
   });
-
-  document.querySelectorAll('[data-biz-blurb]').forEach(function (node) {
-    var biz = BUSINESSES[node.getAttribute('data-biz-blurb')];
-    if (biz && biz.blurb) node.textContent = biz.blurb;
-  });
-
-  document.querySelectorAll('[data-biz-eyebrow]').forEach(function (node) {
-    var biz = BUSINESSES[node.getAttribute('data-biz-eyebrow')];
-    if (biz && biz.eyebrow) node.textContent = biz.eyebrow;
-  });
-
-  document.querySelectorAll('[data-biz-note]').forEach(function (node) {
-    var biz = BUSINESSES[node.getAttribute('data-biz-note')];
-    if (biz && biz.orderNote) node.textContent = biz.orderNote;
-  });
-
   document.querySelectorAll('[data-site-phone]').forEach(function (node) {
     if (!SITE.phone) return;
-    node.setAttribute('href', 'tel:' + SITE.phone);
-    if (!node.textContent.trim()) node.textContent = SITE.phoneLabel || SITE.phone;
+    node.href = 'tel:' + SITE.phone;
+    node.textContent = SITE.phoneLabel || SITE.phone;
   });
+  document.querySelectorAll('[data-portrait]').forEach(function (img) {
+    img.src = SITE.portrait || img.getAttribute('src');
+    img.alt = SITE.portraitAlt || 'Portrait';
+  });
+  ['name', 'tagline', 'order-note'].forEach(function (field) {
+    document.querySelectorAll('[data-biz-' + field + ']').forEach(function (node) {
+      const biz = BUSINESSES[node.getAttribute('data-biz-' + field)];
+      const property = field === 'order-note' ? 'orderNote' : field;
+      if (biz && biz[property] !== undefined) node.textContent = biz[property];
+    });
+  });
+  document.querySelectorAll('[data-biz-image]').forEach(function (img) {
+    const biz = BUSINESSES[img.dataset.bizImage];
+    if (!biz) return;
+    img.src = biz.heroImage || placeholder;
+    img.alt = biz.heroAlt || 'Business photo';
+    if (img.parentElement.matches('a')) {
+      img.parentElement.setAttribute('aria-label', 'View ' + biz.name + ' products');
+    }
+  });
+  document.querySelectorAll('img[src]').forEach(bindPhoto);
+  if (BUSINESSES[pageBusiness]) document.body.dataset.theme = BUSINESSES[pageBusiness].theme;
 
-  /* -- 2. Messenger deep links -------------------------------------------- */
-
-  function messengerUrl(bizKey, item) {
-    var biz = BUSINESSES[bizKey];
+  function messengerUrl(key, productId) {
+    const biz = BUSINESSES[key];
     if (!biz || !biz.messenger) return null;
-
-    var message = item
-      ? 'Hi! I\u2019m interested in ' + item.name + '. Is this available?'
-      : 'Hi! I\u2019d like to ask about your products.';
-
-    // Meta documents `text` for m.me links but its platform policy forbids
-    // pre-filling user messages, so treat the prefill as best-effort. `ref` is
-    // the parameter Meta definitely supports: it's invisible to the customer
-    // but reaches the Page's inbox tooling, so the product is still traceable
-    // if the message box opens empty. Allowed charset: letters, numbers, - _ =
-    var ref = 'website-' + (item ? item.id : 'general');
-
-    var separator = biz.messenger.indexOf('?') === -1 ? '?' : '&';
-    return biz.messenger + separator +
-      'text=' + encodeURIComponent(message) +
-      '&ref=' + encodeURIComponent(ref);
+    try {
+      const url = new URL(biz.messenger);
+      if (url.protocol !== 'https:' || !['m.me', 'messenger.com', 'www.messenger.com'].includes(url.hostname)) return null;
+      if (productId) url.searchParams.set('ref', 'website-' + productId);
+      return url.href;
+    } catch (_) {
+      return null;
+    }
   }
 
   function wireMessengerLinks(scope) {
-    (scope || document).querySelectorAll('[data-messenger]').forEach(function (node) {
-      var key = node.getAttribute('data-messenger') || pageBusiness;
-      var item = null;
-      var productId = node.getAttribute('data-product');
-      if (productId) {
-        item = PRODUCTS.filter(function (p) { return p.id === productId; })[0] || null;
+    scope.querySelectorAll('[data-messenger]').forEach(function (link) {
+      const key = link.dataset.messenger;
+      const url = messengerUrl(key, link.dataset.product);
+      if (url) {
+        link.href = url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = 'Inquire on Messenger';
+        link.setAttribute('aria-label', 'Inquire about ' + (link.dataset.productName || BUSINESSES[key].name) + ' on Messenger (opens in a new tab)');
+      } else {
+        link.href = '#contact-note';
+        link.removeAttribute('target');
+        link.removeAttribute('rel');
+        link.textContent = 'Contact details';
+        link.setAttribute('aria-label', 'Contact details for ' + (link.dataset.productName || BUSINESSES[key]?.name || 'this business'));
       }
-      var href = messengerUrl(key, item);
-      if (href) node.setAttribute('href', href);
-      node.setAttribute('target', '_blank');
-      node.setAttribute('rel', 'noopener');
     });
   }
 
-  /* -- 3. product rendering ------------------------------------------------ */
-
-  function photo(item) {
-    var img = document.createElement('img');
-    img.className = 'media-img';
-    img.setAttribute('src', item.image || PLACEHOLDER_IMG);
-    img.setAttribute('alt', item.alt || item.name || 'Product photo');
-    img.setAttribute('loading', 'lazy');
-    img.setAttribute('decoding', 'async');
-    img.setAttribute('width', '800');
-    img.setAttribute('height', '600');
-    img.addEventListener('error', function () {
-      if (img.getAttribute('data-fallback')) return;
-      img.setAttribute('data-fallback', '1');
-      img.setAttribute('src', PLACEHOLDER_IMG);
-    });
-    return img;
+  const contactNote = document.getElementById('contact-note');
+  if (contactNote) {
+    const missing = Object.keys(BUSINESSES).filter(function (key) { return !messengerUrl(key); });
+    contactNote.hidden = missing.length === 0;
+    if (missing.length === 1) contactNote.textContent = 'Contact details for ' + BUSINESSES[missing[0]].name + ' are not available yet.';
   }
 
-  function variantChips(item) {
-    if (!item.variants || !item.variants.length) return null;
-    var list = el('ul', 'chips');
-    list.setAttribute('aria-label', 'Options');
-    item.variants.forEach(function (variant) {
-      list.appendChild(el('li', 'chip', variant));
-    });
-    return list;
+  function priceLabel(item, biz) {
+    if (biz.showPrices === false || item.price === null || item.price === undefined || item.price === '') return 'Ask for price';
+    const value = Number(item.price);
+    if (!Number.isFinite(value) || value < 0) return 'Ask for price';
+    return (item.priceFrom ? 'From ' : '') + '₱' + value.toLocaleString('en-PH', { maximumFractionDigits: 2 });
   }
 
-  function inquireButton(item, biz) {
-    var link = el('a', 'btn btn-primary btn-block', 'Inquire on Messenger');
-    link.setAttribute('href', '#contact');
-    link.setAttribute('data-messenger', biz.theme === 'brown' ? 'b' : (pageBusiness || 'a'));
-    link.setAttribute('data-product', item.id);
-    return link;
+  const viewer = document.getElementById('photo-viewer');
+  let lastPhotoButton = null;
+  if (viewer) {
+    const closeButton = viewer.querySelector('.viewer-close');
+    closeButton.addEventListener('click', function () { viewer.close(); });
+    viewer.addEventListener('click', function (event) {
+      const bounds = viewer.getBoundingClientRect();
+      if (event.target === viewer && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) viewer.close();
+    });
+    viewer.addEventListener('keydown', function (event) {
+      if (event.key === 'Tab') {
+        event.preventDefault();
+        closeButton.focus();
+      }
+    });
+    viewer.addEventListener('close', function () {
+      document.body.classList.remove('viewer-open');
+      if (lastPhotoButton && lastPhotoButton.isConnected) lastPhotoButton.focus({ preventScroll: true });
+    });
+    // Native dialog handles Escape and makes the background inert.
+  }
+
+  function productPhoto(item) {
+    const button = element('button', 'photo-button');
+    button.type = 'button';
+    button.setAttribute('aria-label', 'View larger photo of ' + item.name);
+    button.setAttribute('aria-haspopup', 'dialog');
+    const img = element('img');
+    img.src = item.image || placeholder;
+    img.alt = item.alt || item.name;
+    img.width = 800;
+    img.height = 600;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    bindPhoto(img);
+    button.appendChild(img);
+    button.addEventListener('click', function () {
+      if (!viewer) return;
+      const large = viewer.querySelector('.viewer-image');
+      large.onerror = function () {
+        large.onerror = null;
+        large.src = placeholder;
+        large.alt = 'Photo placeholder; image unavailable';
+      };
+      large.src = img.currentSrc || img.src;
+      large.alt = img.alt;
+      document.getElementById('viewer-title').textContent = item.name;
+      document.getElementById('viewer-caption').textContent = item.desc || '';
+      lastPhotoButton = button;
+      viewer.showModal();
+      document.body.classList.add('viewer-open');
+    });
+    return button;
   }
 
   function productCard(item, biz) {
-    var card = el('article', 'card');
-    var media = el('div', 'card-media');
-    media.appendChild(photo(item));
-
-    var body = el('div', 'card-body');
-    body.appendChild(el('h3', 'card-title', item.name));
-    body.appendChild(el('p', 'card-desc', item.desc));
-
-    var chips = variantChips(item);
-    if (chips) body.appendChild(chips);
-
-    body.appendChild(el('p', 'price', priceLabel(item, biz)));
-    body.appendChild(inquireButton(item, biz));
-
-    card.appendChild(media);
+    const card = element('article', biz.layout === 'showcase' ? 'showcase-item' : 'product-card');
+    card.appendChild(productPhoto(item));
+    const body = element('div', 'product-body');
+    body.appendChild(element('h3', 'product-title', item.name));
+    if (item.desc) body.appendChild(element('p', 'product-description', item.desc));
+    if (item.variants && item.variants.length) {
+      const list = element('ul', 'variants');
+      list.setAttribute('aria-label', 'Available options');
+      item.variants.forEach(function (variant) { list.appendChild(element('li', '', variant)); });
+      body.appendChild(list);
+    }
+    const bottom = element('div', 'product-bottom');
+    bottom.appendChild(element('p', 'price', priceLabel(item, biz)));
+    const inquiry = element('a', 'text-link inquiry-link', 'Contact details');
+    inquiry.href = '#contact-note';
+    inquiry.dataset.messenger = item.business;
+    inquiry.dataset.product = item.id;
+    inquiry.dataset.productName = item.name;
+    bottom.appendChild(inquiry);
+    body.appendChild(bottom);
     card.appendChild(body);
     return card;
   }
 
-  function showcaseItem(item, biz, index) {
-    var band = el('article', 'showcase-item' + (index % 2 ? ' showcase-item--reverse' : ''));
-
-    var media = el('div', 'showcase-media');
-    media.appendChild(photo(item));
-
-    var body = el('div', 'showcase-body');
-    body.appendChild(el('h3', 'showcase-title', item.name));
-    body.appendChild(el('p', 'showcase-desc', item.desc));
-
-    var chips = variantChips(item);
-    if (chips) body.appendChild(chips);
-
-    body.appendChild(el('p', 'price price-lg', priceLabel(item, biz)));
-    body.appendChild(inquireButton(item, biz));
-
-    band.appendChild(media);
-    band.appendChild(body);
-    return band;
-  }
-
-  function renderProducts() {
-    var mount = document.getElementById('product-list');
-    if (!mount) return;
-
-    var biz = BUSINESSES[pageBusiness];
-    if (!biz) return;
-
-    var items = PRODUCTS.filter(function (p) { return p.business === pageBusiness; });
-
-    if (!items.length) {
-      mount.appendChild(el('p', 'empty-note', biz.emptyNote || 'Message us to see what\u2019s available.'));
-      return;
+  const mount = document.getElementById('product-list');
+  if (mount && BUSINESSES[pageBusiness]) {
+    const biz = BUSINESSES[pageBusiness];
+    const items = PRODUCTS.filter(function (item) { return item.business === pageBusiness; });
+    const count = document.querySelector('[data-product-count]');
+    mount.dataset.count = String(items.length);
+    if (items.length) {
+      const list = element('div', biz.layout === 'showcase' ? 'showcase' : 'product-grid');
+      items.forEach(function (item) { list.appendChild(productCard(item, biz)); });
+      mount.appendChild(list);
+      if (count) count.textContent = items.length + (items.length === 1 ? ' product. ' : ' products. ') + 'Tap a photo for a closer look.';
+    } else {
+      mount.appendChild(element('p', 'empty-note', 'There are no products to show yet.'));
+      if (count) count.hidden = true;
     }
-
-    var wrap = el('div', biz.layout === 'showcase' ? 'showcase' : 'product-grid');
-    items.forEach(function (item, index) {
-      wrap.appendChild(
-        biz.layout === 'showcase' ? showcaseItem(item, biz, index) : productCard(item, biz)
-      );
-    });
-
-    mount.appendChild(wrap);
-    mount.setAttribute('data-count', String(items.length));
-    wireMessengerLinks(mount);
   }
-
-  /* -- go ----------------------------------------------------------------- */
-
   wireMessengerLinks(document);
-  renderProducts();
 
-  // Set the "current page" marker in the nav.
-  document.querySelectorAll('.nav a[href]').forEach(function (link) {
-    var href = link.getAttribute('href').split('#')[0];
-    var here = window.location.pathname.split('/').pop() || 'index.html';
-    if (href && href === here) link.setAttribute('aria-current', 'page');
+  function pageName(path) {
+    return path.replace(/\/$/, '').split('/').pop().replace(/\.html$/, '') || 'index';
+  }
+  const current = pageName(window.location.pathname);
+  document.querySelectorAll('.nav-link[href]').forEach(function (link) {
+    if (pageName(new URL(link.href).pathname) === current) link.setAttribute('aria-current', 'page');
   });
 })();

@@ -3,37 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- PLACEHOLDER: replace title, description, share image and noindex before launch. -->
   <title>Page not found</title>
+  <meta name="description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">
   <meta name="robots" content="noindex">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Page not found">
+  <meta property="og:description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">
+  <meta property="og:image" content="/assets/img/og-share.svg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/assets/fonts/source-sans-3-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="wordmark" href="/">
-        <svg class="wordmark-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 21c0-6 3-9 8-9 0 5-4 9-8 9Z"/>
-          <path d="M12 21C12 13 8 9 3 9c0 6 4.5 12 9 12Z"/>
-        </svg>
-        <span data-site="momName">Lorna Reyes</span>
-      </a>
-    </div>
-  </header>
-
-  <main id="main" class="notfound container">
-    <p class="eyebrow">Error 404</p>
-    <h1>That page isn&rsquo;t here</h1>
-    <p class="lede">The link may be old, or I may have moved something around. Try one of these instead:</p>
-    <div class="btn-row">
-      <a class="btn btn-primary" href="/">Go home</a>
-      <a class="btn btn-ghost" href="/business-a.html">Ink &amp; Thread</a>
-      <a class="btn btn-ghost" href="/business-b.html">Sunrise Pantry</a>
-    </div>
-  </main>
-
-  <script src="/data/site.js" defer></script>
-  <script src="/data/businesses.js" defer></script>
-  <script src="/assets/js/main.js" defer></script>
-</body>
-</html>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><div class="container header-inner"><a class="wordmark" href="/"><svg class="wordmark-mark" viewBox="0 0 36 40" fill="none" aria-hidden="true"><path d="M18 36V19M18 28C6 28 4 17 4 13c9 0 14 5 14 15ZM18 22C18 11 25 7 32 7c0 9-4 15-14 15Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" fill="currentColor"/></svg><span data-site="momName">Lorem Ipsum</span></a></div></header>
+  <main class="container notfound" id="main"><h1>That page isn’t here.</h1><p class="lede">The link may have changed. You can return home or browse either business.</p><div class="btn-row"><a class="btn btn-primary" href="/">Go home</a><a class="btn btn-outline" href="/business-a.html" data-biz-name="a">Lorem ipsum</a><a class="btn btn-outline" href="/business-b.html" data-biz-name="b">Dolor sit amet</a></div></main>
+  <script src="/data/site.js" defer></script><script src="/data/businesses.js" defer></script><script src="/assets/js/main.js" defer></script>
+</body></html>

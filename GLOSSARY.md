@@ -42,20 +42,17 @@ broken and empty.
 _Avoid_: featured, hero, banner
 
 **Theme**:
-The accent colour set a business page resolves its accent tokens to — green-led for
-Business A, brown-led for Business B. Its only job is making the current business obvious
-at a glance.
+The supporting accent colour that helps distinguish the businesses: green for
+Business A and brown for Business B. Yellow remains the main colour across the site.
 _Avoid_: skin, palette (the Palette is the shared set of tokens both Themes draw from)
 
 **Palette**:
-The shared set of colour tokens both Themes draw from: cream, ink, muted, green, brown,
-yellow, line.
+The colours shared by both businesses: sunflower yellow, light yellow, green,
+brown, dark ink, and white.
 
 **Placeholder**:
-A value that is knowingly fake and must be replaced before launch. Two kinds: Group A
-values only Mom can supply, Group B values we decide. There is currently no enforced marker
-convention, so Placeholders cannot be found by searching — a known defect, see `PLAN.md`
-§11.3.
+Temporary content that must be replaced before launch. This preview uses lorem ipsum
+and neutral photo stand-ins until Mom supplies real business content.
 
 **Mom**:
 The person the site is for. She supplies content and never edits the repository.
