@@ -63,7 +63,7 @@
     img.src = biz.heroImage || placeholder;
     img.alt = biz.heroAlt || 'Business photo';
     if (img.parentElement.matches('a')) {
-      img.parentElement.setAttribute('aria-label', 'View ' + biz.name + ' products');
+      img.parentElement.setAttribute('aria-label', 'Explore ' + biz.name);
     }
   });
   document.querySelectorAll('img[src]').forEach(bindPhoto);
@@ -185,7 +185,7 @@
     }
     const bottom = element('div', 'product-bottom');
     bottom.appendChild(element('p', 'price', priceLabel(item, biz)));
-    const inquiry = element('a', 'text-link inquiry-link', 'Contact details');
+    const inquiry = element('a', 'btn btn-outline inquiry-link', 'Contact details');
     inquiry.href = '#contact-note';
     inquiry.dataset.messenger = item.business;
     inquiry.dataset.product = item.id;

@@ -1,19 +1,20 @@
-/* PLACEHOLDER: replace lorem ipsum and empty values with Mom's details.
+/* Preview copy based on Winnie’s confirmed businesses. Portrait and contacts are pending.
    Photos live in assets/img/. Keep preview true until the content is ready.
-   Before launch, also update the static HTML text and metadata; see PLAN.md. */
+   Also update static HTML copy and metadata when editing; see PLAN.md. */
 window.SITE = {
   preview: true,
-  momName: 'Lorem Ipsum',
-  headline: 'Lorem ipsum, dolor sit amet.',
-  introduction: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
-  story: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-  storyClosing: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-  portrait: 'assets/img/portrait.svg',
-  portraitAlt: 'Portrait placeholder',
-  footerNote: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  phone: '',
-  phoneLabel: '',
-  hours: '',
-  location: '',
-  credit: '',
+  siteName: "Winnie Works",
+  momName: "Winnie",
+  headline: "A personal touch, from Winnie.",
+  introduction: "I create personalized balloon art by hand and offer a small selection of Unicity products. Welcome to my little corner—take a look around and explore my two businesses.",
+  story: "I’m Winnie, the person behind Personalized Balloon Art. I carefully create each piece by hand, adding a personal touch to the moments you want to celebrate.",
+  storyClosing: "Alongside my balloon art, I resell Unicity products. I’ve brought both businesses together here so you can explore them in one place.",
+  portrait: "assets/img/portrait.svg",
+  portraitAlt: "Portrait placeholder for Winnie",
+  footerNote: "Have a balloon idea in mind or a question about a Unicity product? Choose a business below for contact details.",
+  phone: "",
+  phoneLabel: "",
+  hours: "",
+  location: "",
+  credit: "",
 };

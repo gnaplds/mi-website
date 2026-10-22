@@ -1,26 +1,16 @@
-# No build step: the repository is the deployed artefact
+# No build step: publish the repository directly
 
-The site is plain HTML, CSS and JavaScript served exactly as committed. There is no
-`package.json`, no bundler, no templating step and no `npm install` — Netlify publishes the
-repository root directly.
+The site uses plain HTML, CSS, and JavaScript, with three content pages and a
+separate 404 page. Netlify publishes the repository root without a build command.
+This keeps maintenance limited to editing files and pushing changes.
 
-The cost is real and shows up in the markup: because there is no templating, the header,
-navigation and footer are duplicated across the three page shells, and the business names
-appear in both `data/businesses.js` and the HTML. That is roughly 26 lines of duplicated
-content, and it is the reason "rename a business in one file" is not literally true.
+The trade-off is duplicated headers, footers, and fallback copy. Editable data
+updates rendered content but does not update HTML metadata. Products are rendered
+by JavaScript; personal and business fallback text also exists in HTML.
 
-We accepted that cost because the alternative — a generator — adds a toolchain, a build
-step and a dependency tree to a five-page brochure site, and because the person maintaining
-it should be able to open a file, edit text and push. **This decision should be revisited,
-and this ADR superseded, at the point the duplication starts costing more than the
-toolchain would:** a fourth page, a second language, or any content that must appear in
-more than three places.
+A generator such as Eleventy or Astro was considered and rejected because it adds
+a toolchain for this small site. Revisit that choice if duplicated content becomes
+costly, another language is required, or product copy must exist in raw HTML.
 
-**Considered options**: Eleventy or Astro with a layout include (rejected: build step and
-dependencies for five pages); a client-side include fetched at runtime (rejected: content
-not present in HTML source, worsens exactly the problem it would solve); PHP or server-side
-includes (rejected: no server).
-
-**Consequences**: product and business content is rendered client-side, so it is absent
-from the raw HTML. Any future requirement for crawler-visible product copy forces either a
-generator or pre-rendered markup.
+Documentation corrected 13 October 2026: earlier references to five pages and a
+fixed number of duplicated lines were stale. The no-build decision is unchanged.

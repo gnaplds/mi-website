@@ -1,83 +1,62 @@
-# Mom's website
+# Winnie Works
 
-A personal website for Mom to introduce herself and showcase products from two businesses. Visitors can browse products, enlarge photos, and contact each business through Messenger once its link is configured.
+A personal showcase for Winnie, Personalized Balloon Art, and Unicity Products,
+built with plain HTML, CSS, and JavaScript. No build step or package installation is required.
 
-The design uses yellow as the main colour, with green and brown accents and a light, natural feel. The site uses plain HTML, CSS, and JavaScript. There is no build step, package installation, checkout, or payment system.
+**Live preview:** [winnieworks.netlify.app](https://winnieworks.netlify.app/)
 
-## Current status
+The local preview uses English copy, 12 sample balloon designs, and separate
+Bios Life S and Unimate Lemon entries. The supplied Unicity image is included;
+other photos, prices, and Messenger links are pending. Search indexing remains
+disabled with `noindex`. Publish the local changes to update the live preview.
 
-This is a preview with lorem ipsum text and placeholder images. Real business names, product details, prices, and contact links still need to be supplied. Search indexing is disabled with `noindex` metadata until the content is ready.
+## Run locally
 
-## Preview locally
-
-From the project folder, run:
+From the project folder:
 
 ```bash
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Open [the local homepage](http://127.0.0.1:8000/index.html). Stop the server with `Ctrl+C`.
+Open [the homepage](http://127.0.0.1:8000/index.html). Use the `.html` business links
+locally. Stop the server with `Ctrl+C`.
 
-Use `/business-a.html` and `/business-b.html` locally. The shorter routes `/business-a` and `/business-b` are configured for Netlify.
+## Edit content
 
-## Edit the content
+Mom supplies the photos and descriptions; you update the files.
 
-Mom supplies the photos and descriptions; the site owner updates these files:
-
-| File | What to edit |
+| File | Content |
 | --- | --- |
-| `data/site.js` | Mom's name, introduction, story, portrait, and contact details |
-| `data/businesses.js` | Business names, descriptions, cover photos, Messenger links, and price visibility |
-| `data/products.js` | Product names, descriptions, photos, prices, and variants |
-| `assets/img/` | Portrait, business photos, and product photos |
-| `assets/css/styles.css` | Colours, typography, spacing, and responsive layout |
-| `index.html`, `business-a.html`, `business-b.html`, `404.html` | Static text, page titles, and metadata |
+| `data/site.js` | Website name, Winnie's introduction, story, portrait and contact details |
+| `data/businesses.js` | Business names, photos, Messenger links, ordering notes |
+| `data/products.js` | Products, prices, variants, image paths and alt text |
+| `assets/img/` | Photos and placeholder images |
+| Root HTML files | Static fallback text, page titles and sharing metadata |
 
-To add a product, copy an existing object in `data/products.js`. Give it a unique `id`, set `business` to `'a'` or `'b'`, and update its content. Products appear in array order.
+Copy a product object to add one, assign a unique `id`, and set `business` to `a`
+or `b`. Products appear in array order. Use a numeric peso price or `null` for
+“Ask for price”; `priceFrom: true` adds “From”. A business's `showPrices: false`
+also displays “Ask for price”. Replace image paths and alt text together.
 
-- Set `price` to a number in Philippine pesos, or `null` for “Ask for price.”
-- Set `priceFrom: true` for a starting price.
-- Set a business's `showPrices: false` to hide its product prices.
-- Update both `image` and `alt` when replacing a photo. Alt text should describe the image.
-- Set each business's `messenger` to its real link, such as `https://m.me/your-page-name`. Empty links direct visitors to the contact note.
+The shared design lives in `assets/css/styles.css`. Fonts are hosted locally; keep
+their licence files when updating them. Motion follows the visitor’s reduced-motion setting.
 
-Keep quotation marks, commas, and brackets intact when editing JavaScript. Save and refresh the local preview to check changes.
+## Publish updates
 
-## Publish through GitHub and Netlify
-
-Push the project to your GitHub repository. Then, in Netlify, choose **Add new project → Import an existing project**, connect GitHub, and select this repository.
-
-Use these settings:
-
-| Setting | Value |
-| --- | --- |
-| Production branch | `master` |
-| Base directory | Leave blank |
-| Build command | Leave blank |
-| Publish directory | `.` |
-| Environment variables | None required |
-
-The publish directory and business page routes are already configured in `netlify.toml`. Netlify also uses the root `404.html` for missing pages.
-
-See [Netlify's repository deployment guide](https://docs.netlify.com/start/quickstarts/deploy-from-repository/) for the dashboard workflow.
-
-After GitHub authentication and the initial connection are complete, publish future edits with:
+Preview your edits, then review and commit the intended files:
 
 ```bash
-git add README.md
-git commit -m "Add project README"
+git status --short
+git diff
+# Replace these example paths with the files you changed.
+git add data/site.js data/businesses.js data/products.js
+git commit -m "Update website content"
 git push
 ```
 
-For later updates, replace `README.md` with the files you changed and use a commit message that describes the update. Netlify automatically deploys pushes to the connected production branch.
+Netlify deploys updates through the connected GitHub repository. The configuration
+publishes `.` with no build command. Check the deploy result and live pages after
+pushing.
 
-## Before sharing the finished website
-
-- Replace all lorem ipsum text and placeholder images, including static HTML text.
-- Add and test the real Messenger links and any other contact details.
-- Review product descriptions, prices, and image alt text.
-- Update page titles, descriptions, social sharing images, and example domain references in `robots.txt` and `sitemap.xml`.
-- Set `preview: false` in `data/site.js` and remove the `noindex` metadata from pages intended for search results.
-- Check the deployed site on a phone, including both business pages, photo viewers, contact links, and the missing-page response.
-
-See [PLAN.md](PLAN.md) for the agreed scope, design decisions, and verification notes.
+See [PLAN.md](PLAN.md) for the rebuild specification, full content fields,
+verification checklist, and remaining launch work.
